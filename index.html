@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="dadosInput">
+        <label for="produto">INSIRA O PRODUTO: </label>
+        <input type="text" id="produto" placeholder="Nome do produto aqui">
+        <label for="valor">INSIRA O VALOR:</label>
+        <input type="number" id ="valor" placeholder="Valor do produto aqui">
+        <button onclick="venda()" class="buttonV">Venda</button>
+        <button onclick="pagamento()" class="buttonP">Pagamento</button>
+    </div>
+    
+    <table id="tabela-produtos">
+        <tr>
+            <th>
+                Vendas
+            </th>
+            <th>
+                Produto
+            </th>
+            <th>
+                Valor
+            </th>
+            <th>
+                Data
+            </th>
+            <th>
+                Selecionar
+            </th>
+        </tr>
+    </table>
+    
+    <table id="total" class="tabelaTotal">
+        
+    </table>
+
+    <input type="hidden" id="precoTotal">
+
+    <script>
+        const today = new Date();
+        var cont=0;
+        var total = 0;
+        var maiorValor = 0;
+        var maiorDespesa = 0;
+        function venda(){
+            var novaLinha = "";
+            var novoTotal = "";
+            cont +=1;
+             
+            novoProd = document.getElementById("produto").value;
+            valor = parseFloat(document.getElementById("valor").value);
+            total += valor;
+            novaLinha = "<tr><td>"+ cont +"</td><td>" + novoProd + "</td><td>"+ "+R$" + valor +"</td><td>"+ today.toLocaleDateString() +"</td><td><input type='checkbox'></td></tr>";
+            document.getElementById("tabela-produtos").innerHTML += novaLinha;
+            if (maiorValor<valor){
+                maiorValor=valor;
+            }
+            novoTotal = "<tr><th colspan='4'>TOTAL</th></tr><tr><th>Lucro:</th><td id='lucro123'>"+ "<b>R$ " + total.toFixed(2) + "</b></td></tr><tr><th>Maior venda:</th><td> <b>R$"+ maiorValor +"</b></td></tr><tr><th>Maior Despesa:</th><td><b>R$"+ maiorDespesa +"</b></td></tr>";
+            document.getElementById("total").innerHTML = novoTotal;
+    
+        }
+
+        function pagamento(){
+            var novaLinha = "";
+            var novoTotal = "";
+            cont +=1;
+             
+            novoProd = document.getElementById("produto").value;
+            valor = parseFloat(document.getElementById("valor").value);
+            total -= valor;
+            novaLinha = "<tr><td>"+ cont +"</td><td>" + novoProd + "</td><td>"+ "-R$" + valor +"</td><td>"+ today.toLocaleDateString() +"</td><td><input type='checkbox'></td></tr>";
+            document.getElementById("tabela-produtos").innerHTML += novaLinha;
+            if (maiorDespesa<valor){
+                maiorDespesa=valor;
+            }
+            novoTotal = "<tr><th colspan='4'>TOTAL</th></tr><tr><th>Lucro:</th><td>"+ "<b>R$" + total.toFixed(2) + "</b></td></tr><tr><th>Maior venda:</th><td> <b>R$"+ maiorValor +"</b></td></tr><tr><th>Maior Despesa:</th><td><b>R$"+ maiorDespesa +"</b></td></tr>";
+            document.getElementById("total").innerHTML = novoTotal;
+            
+        }
+        
+    </script>
+
+<style>
+
+    body{
+        height: 100vh;
+        background-image: linear-gradient( 171.8deg,  rgba(5,111,146,1) 13.5%, rgba(6,57,84,1) 78.6% );
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        font-family: 'Nunito Sans', sans-serif;
+    }
+      .lucro123{
+        background-color: red;
+        color: white;
+    }
+
+    table{
+        border-collapse: collapse;
+        width: 45%;
+        text-align: center;
+        margin-top: 2%;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Nunito Sans', sans-serif;
+    }
+    
+    th{
+        border: 1px solid black;
+        padding: 8px;
+        background-color: #202832;
+        color: white;
+        font-family: 'Nunito Sans', sans-serif;
+    }
+
+    td{
+        border: 1px solid black;
+        padding: 8px;
+        font-family: 'Nunito Sans', sans-serif;
+        background-color: #2C3844;
+        color: white;
+    }
+
+
+    .dadosInput{
+        width: 45%;
+        margin: 0 auto;
+        
+        padding: 1%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tabelaTotal{
+        width: 45%;
+    }
+
+  
+
+    button{
+        padding: 2%;
+        margin-top: 2%;
+        width: 25%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #128E79;
+        font-weight: bold;
+        font-family: 'Nunito Sans', sans-serif;
+        border-style: none;
+        color: white;
+    }
+
+    button:hover{
+        background-color: #1DE3C1;
+        transition: 0.4s;
+        box-shadow: 0 0px 50px rgba(255, 255, 255, 0.5);
+    }
+
+    label{
+        text-align: center;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        font-size: 120%;
+        font-weight: bolder;
+        color: white;
+    }
+
+    input{
+        width: 50%;
+        font-size: 120%;
+        margin: auto;
+        font-family: 'Nunito Sans', sans-serif;
+    }
+
+    @media only screen and (max-width: 600px) {
+        /* Estilos específicos para telas menores que 600px */
+        .dadosInput {
+            width: 100%;
+        }
+
+        table {
+            width: 50%;
+            font-size: 80%; /* Ajuste o tamanho da fonte conforme necessário */
+        }
+
+        button {
+            width: 50%;
+        }
+    }
+</style>
+
+</body>
+</html>
